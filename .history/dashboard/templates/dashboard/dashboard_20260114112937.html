@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Accueil – Recherche globale{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-search me-2" style="color: #0d6efd;"></i>
+    <span style="color: #0d6efd;">Recherche globale</span></h2>
+
+<div class="dashboard-controls">
+    <div class="search-bar">
+        <input type="text" id="searchBar" placeholder="🔍 Rechercher dans tous les marchés et cartes…" value="{{ q }}">
+    </div>
+    <div class="filter-options">
+        <select id="typeFilter">
+            <option value="all" {% if type_filter == 'all' %}selected{% endif %}>Tous les types</option>
+            <option value="global" {% if type_filter == 'global' %}selected{% endif %}>Marchés globaux</option>
+            <option value="detaille" {% if type_filter == 'detaille' %}selected{% endif %}>Marchés détaillés</option>
+            <option value="carte" {% if type_filter == 'carte' %}selected{% endif %}>Cartes</option>
+        </select>
+    </div>
+</div>
+
+<div class="results-grid">
+    {% for obj in results %}
+        <div class="result-card" data-type="{{ obj.obj_type }}">
+            <h3>{{ obj.title }}</h3>
+            <p class="subtitle">{{ obj.subtitle }}</p>
+            <a href="{{ obj.url }}" class="btn-voir">Voir</a>
+        </div>
+    {% empty %}
+        <p class="empty-message">Aucun résultat.</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+{% endblock %}

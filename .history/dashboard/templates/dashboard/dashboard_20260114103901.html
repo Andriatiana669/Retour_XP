@@ -1,0 +1,59 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Marchés Globaux{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-globe me-2" style="color: #0d6efd;"></i>
+    <span style="color: #0d6efd;">Marchés Globaux</span></h2>
+
+<!-- Contrôles : recherche + filtre par champ -->
+<div class="dashboard-controls">
+    <div class="search-bar">
+        <input type="text" id="searchMarche" placeholder="🔍 Rechercher…">
+    </div>
+    <div class="filter-options">
+        <select id="searchField">
+            <option value="all">Partout</option>
+            <option value="titre">Titre marché</option>
+            <option value="nom_marche">Nom marché</option>
+            <option value="prestation">Prestations</option>
+            <option value="client">Clients</option>
+            <option value="resp">Responsables</option>
+            <option value="carte">Titres cartes</option>
+        </select>
+    </div>
+</div>
+
+<!-- Grille des marchés -->
+<div class="marches-grid">
+    {% for marche in marches_globaux %}
+    <div class="marche-card"
+         data-titre="{{ marche.nom|lower }}"
+         data-nom_marche="{{ marche.nom_marche.nom|lower }}"
+         data-prestation="{% for d in marche.marches_detailles.all %}{% for p in d.prestation.all %}{{ p.nom|lower }}|{% endfor %}{% endfor %}"
+         data-client="{% for d in marche.marches_detailles.all %}{% for c in d.nom_client.all %}{{ c.nom|lower }}|{% endfor %}{% endfor %}"
+         data-resp="{% for d in marche.marches_detailles.all %}{% for r in d.resp_marche.all %}{{ r.user.username|lower }}|{% endfor %}{% endfor %}"
+         data-carte="{% for d in marche.marches_detailles.all %}{% for ca in d.cartes.all %}{{ ca.titre|lower }}|{% endfor %}{% endfor %}">
+        <h3>{{ marche.nom }}</h3>
+        <div class="marche-stats">
+            <span class="projet-count">{{ marche.nombre_projet }} projet{{ marche.nombre_projet|pluralize }}</span>
+        </div>
+        {% if marche.description %}
+        <p>{{ marche.description|truncatewords:20 }}</p>
+        {% endif %}
+        <a href="{% url 'dashboard:liste_marche' marche.id %}" class="btn-voir">Voir les détails</a>
+    </div>
+    {% empty %}
+    <p class="empty-message">Aucun marché global disponible.</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+{% endblock %}

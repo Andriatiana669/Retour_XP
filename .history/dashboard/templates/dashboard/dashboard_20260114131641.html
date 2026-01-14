@@ -1,0 +1,43 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Marchés Globaux{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h2><i class="fas fa-globe me-2" style="color: #0d6efd;"></i>
+        <span style="color: #0d6efd;">Marchés Globaux</span></h2>
+
+    <div class="dashboard-controls">
+        <div class="search-bar">
+            <input type="text" id="searchMarche" placeholder="🔍 Rechercher un marché...">
+        </div>
+    </div>
+
+    <div class="marches-grid">
+        {% for marche in marches_globaux %}
+        <div class="marche-card" data-id="{{ marche.id }}">
+            <h3>{{ marche.nom }}</h3>
+            <div class="marche-stats">
+                <span class="projet-count">{{ marche.nombre_projet }} projet{{ marche.nombre_projet|pluralize }}</span>
+            </div>
+            {% if marche.description %}
+            <p>{{ marche.description|truncatewords:20 }}</p>
+            {% endif %}
+            <a href="{% url 'dashboard:liste_marche' marche.id %}" class="btn-voir">Voir les détails</a>
+        </div>
+        {% empty %}
+        <p class="empty-message">Aucun marché global disponible.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        window.searchData = {{ search_data|safe }};
+    </script>
+    <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+{% endblock %}
