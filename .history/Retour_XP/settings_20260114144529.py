@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['retour_xp.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -160,9 +160,3 @@ LOGIN_URL = 'authentification:login'
 LOGIN_REDIRECT_URL = 'dashboard:dashboard'
 LOGOUT_REDIRECT_URL = 'authentification:login'
 #LOGOUT_REDIRECT_URL = '/'
-
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
