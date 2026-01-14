@@ -1,0 +1,19 @@
+/* Masque le fieldset entier si la solution choisie n’a PAS demande_demarche */
+.solution-dependent {
+    display: none;
+}
+
+/* Affiche le fieldset uniquement si la solution choisie a demande_demarche = True */
+.solution-dependent:has(select option:checked[data-demand="1"]) {
+    display: block !important;
+}
+
+/* Badge coloré */
+.badge-warning {
+    background: #ffc107;
+    color: #212529;
+}
+.badge-info {
+    background: #17a2b8;
+    color: #fff;
+}

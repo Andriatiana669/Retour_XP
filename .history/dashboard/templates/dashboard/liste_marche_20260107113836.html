@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Marchés - {{ marche_global.nom }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/liste_marche.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-list-ul me-2"></i>{{ marche_global.nom }}</h1>
+        <nav>
+            <a href="{% url 'dashboard:dashboard' %}"><i class="fas fa-arrow-left me-1"></i>Retour</a>
+            <a href="{% url 'authentification:logout' %}"><i class="fas fa-sign-out-alt me-1"></i>Déconnexion</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2><i class="fas fa-table me-2" style="color: #0d6efd;"></i> <span style="color: #0d6efd;"> Liste des Marchés Détaillés </span></h2>
+
+        <table class="marches-table">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-calendar-alt me-1"></i> <span> Date de MAJ </span> </th>
+                    <th><i class="fas fa-tasks me-1"></i> <span> État Affaire </span> </th>
+                    <th><i class="fas fa-shopping-cart me-1"></i> <span> Marché </span> </th>
+                    <th><i class="fas fa-user-tie me-1"></i> <span> Resp Projet </span> </th>
+                    <th><i class="fas fa-cogs me-1"></i> <span> Actions </span> </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for marche in marches_detailles %}
+                <tr>
+                    <td>{{ marche.date_maj|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        {% if marche.etat_affaire %}
+                        <span class="etat-badge"
+                              style="color: {{ marche.etat_affaire.couleur }};
+                                     background-color: {{ marche.etat_affaire.couleur_fond }}">
+                            {{ marche.etat_affaire.nom }}
+                        </span>
+                        {% else %}
+                        <span class="etat-badge">Non défini</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ marche.nom_marche }}</td>
+                    <td>{{ marche.resp_marche }}</td>
+                    <td>
+                        <a href="{% url 'marches:description' marche.id %}" class="btn-voir">
+                            <i class="fas fa-eye me-1"></i>Voir
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Aucun marché détaillé trouvé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <script src="{% static 'dashboard/js/liste_marche.js' %}"></script>
+</body>
+</html>

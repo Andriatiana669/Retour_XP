@@ -1,0 +1,89 @@
+/* carte_detail.css */
+.carte-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.btn-retour {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+}
+.carte-detail-main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.detail-card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.detail-row i {
+  color: var(--primary);
+  width: 20px;
+}
+.detail-content {
+  margin-top: 1.5rem;
+}
+.detail-image img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  margin-top: 1rem;
+}
+
+/* carte_confirm_delete.css */
+.delete-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.delete-main {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.delete-card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+.delete-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+.delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.btn-cancel {
+  background: #6c757d;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+}
+.btn-del {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}

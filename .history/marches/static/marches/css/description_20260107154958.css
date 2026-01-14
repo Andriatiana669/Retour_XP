@@ -1,0 +1,144 @@
+/* ---------- VARIABLES ---------- */
+:root {
+    --primary: #0d6efd;
+    --glass: rgba(255, 255, 255, 0.55);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+    --txt: #212529;
+    --bg: #f5f7fb;
+}
+
+body {
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    color: var(--txt);
+    margin: 0;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #0b5ed7 100%);
+    color: #fff;
+    padding: 3rem 2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.hero-content h1 { margin: 0; font-size: 2rem; font-weight: 600; }
+.hero-badges { display: flex; gap: .75rem; margin-top: .75rem; }
+.etat-badge {
+    padding: .35rem .75rem;
+    border-radius: 50rem;
+    font-size: .85rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.date-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: .35rem .75rem;
+    border-radius: 50rem;
+    font-size: .85rem;
+}
+.hero-nav { display: flex; gap: .75rem; }
+.btn-nav {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: .375rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    transition: background 0.2s;
+}
+.btn-nav:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* ---------- CONTAINER ---------- */
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+/* ---------- INFO GRID ---------- */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.info-card {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.info-item:last-child { border-bottom: none; }
+.info-item i { font-size: 1.2rem; color: var(--primary); }
+.info-item strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: .2rem; }
+
+.description-box {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+.description-box h3 { margin-top: 0; display: flex; align-items: center; gap: .5rem; }
+
+/* ---------- CARTES ---------- */
+.cartes-section { margin-top: 3rem; }
+.cartes-section h2 { display: flex; align-items: center; gap: .5rem; margin-bottom: 1.5rem; }
+.cartes-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+
+.carte {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+.carte:hover { transform: translateY(-4px); }
+
+.carte-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.carte-header h4 { margin: 0; font-size: 1.1rem; }
+.btn-copy {
+    background: none; border: none; color: var(--primary); cursor: pointer;
+    font-size: 1rem; padding: .25rem; border-radius: .25rem;
+    transition: background 0.2s;
+}
+.btn-copy:hover { background: rgba(13, 110, 253, 0.1); }
+
+.carte-body { padding: 1rem 1.5rem; flex: 1; }
+.carte-body .objet,
+.carte-body .client { margin: .25rem 0; font-size: 0.9rem; }
+.carte-body .contenu { margin-top: 1rem; line-height: 1.6; }
+
+.carte-image img {
+    width: 100%; height: auto; object-fit: cover; border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.carte-footer {
+    padding: .75rem 1.5rem; font-size: 0.8rem; color: #6c757d;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.empty-cartes { text-align: center; padding: 3rem 0; color: #6c757d; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .hero { flex-direction: column; align-items: flex-start; }
+    .info-grid { grid-template-columns: 1fr; }
+}

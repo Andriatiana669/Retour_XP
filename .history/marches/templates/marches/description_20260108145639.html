@@ -1,0 +1,122 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ marche_detaille.titre }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'marches/css/description.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<main class="container">
+    <section class="info-grid">
+        <div class="info-card">
+            <div class="info-header">
+                <span class="etat-item"><i class="fas fa-tag"></i><strong>Statut :</strong> {{ marche_detaille.etat_affaire.nom|default:'Non défini' }}</span>
+                <span class="maj-item"><i class="far fa-clock"></i><strong>MAJ :</strong> {{ marche_detaille.date_maj|date:"d/m/Y H:i" }}</span>
+            </div>
+            <div class="info-items-container">
+                <div class="info-item"><i class="fas fa-barcode"></i><span><strong>Matricule</strong><br>{{ marche_detaille.matricule }}</span></div>
+                <div class="info-item"><i class="fas fa-shopping-cart"></i><span><strong>Marché</strong><br>{{ marche_detaille.nom_marche }}</span></div>
+                <div class="info-item"><i class="fas fa-user-tie"></i><span><strong>Responsable</strong><br>{{ marche_detaille.resp_marche }}</span></div>
+            </div>
+        </div>
+        {% if marche_detaille.description %}
+        <div class="description-box">
+            <h3><i class="fas fa-info-circle"></i> Description</h3>
+            <p>{{ marche_detaille.description|linebreaks }}</p>
+        </div>
+    {% endif %}
+    </section>
+
+  <!-- ========== CARTES ========== -->
+    <section class="cartes-section">
+        <div class="cartes-header">
+            <h2><i class="fas fa-layer-group"></i> Cartes</h2>
+            <div class="view-toggle">
+                <button id="btnGrand" class="vue-btn active" title="Grandes cartes"><i class="fas fa-th-large"></i></button>
+                <button id="btnPetit" class="vue-btn" title="Petites cartes"><i class="fas fa-list"></i></button>
+            </div>
+            {% if request.user.profile.est_responsable %}
+            <a href="{% url 'marches:ajouter_carte' marche_detaille.id %}" class="btn-add"><i class="fas fa-plus-circle"></i> Ajouter une carte</a>
+            {% endif %}
+        </div>
+
+        <!-- Barre outils : tri + filtre -->
+        <div class="cartes-tools">
+            <div class="tools-left">
+                <select id="searchField" class="form-field">
+                    <option value="all">Tout</option>
+                    <option value="titre">Titre</option>
+                    <option value="objet">Objet</option>
+                    <option value="client">Client</option>
+                </select>
+                <input type="text" id="searchCarte" placeholder="🔍 Rechercher..." class="form-search">
+            </div>
+            <div class="tools-right">
+                <select id="sortSelect" class="form-sort">
+                    <option value="date-desc">Date MAJ ↓</option>
+                    <option value="date-asc">Date MAJ ↑</option>
+                    <option value="titre-az">Titre A-Z</option>
+                    <option value="titre-za">Titre Z-A</option>
+                </select>
+
+                <select id="sortSelect" class="form-sort"> ... </select>
+                    <button id="resetFilters" class="btn-reset" title="Réinitialiser les filtres">
+                        <i class="fas fa-undo"></i>
+                    </button>
+            </div>
+        </div>
+
+        <!-- Conteneur DES CARTES -->
+        <div id="cartesContainer" class="cartes-container">
+            {% for carte in cartes %}
+            <div class="carte" data-id="{{ carte.id }}"
+                data-titre="{{ carte.titre|lower }}"
+                data-objet="{{ carte.objet|default:''|lower }}"
+                data-client="{{ carte.nom_client|default:''|lower }}"
+                data-date="{{ carte.date_maj|date:'Y-m-d H:i:s' }}">
+
+                <!-- actions visibles dans les 2 modes -->
+                <div class="carte-actions mode-independent">
+                    <a href="{% url 'marches:voir_carte' carte.id %}" class="btn-act" title="Voir"><i class="fas fa-eye"></i></a>
+                    {% if request.user.profile.est_responsable %}
+                    <a href="{% url 'marches:modifier_carte' carte.id %}" class="btn-act mod" title="Modifier"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'marches:supprimer_carte' carte.id %}" class="btn-act del" title="Supprimer" onclick="return confirm('Supprimer cette carte ?');"><i class="fas fa-trash"></i></a>
+                    {% endif %}
+                </div>
+
+        <!-- Conteneur unique -->
+        <div class="carte-inner">
+          <!-- Vue compacte (ligne) -->
+          <div class="carte-compact">
+            <span class="cc-titre"><i class="far fa-folder"></i> {{ carte.titre }}</span>
+            <span class="cc-objet"><i class="fas fa-paperclip"></i> {{ carte.objet|default:"-" }}</span>
+            <span class="cc-client"><i class="fas fa-user-alt"></i> {{ carte.nom_client|default:"-" }}</span>
+            <span class="cc-date"><i class="far fa-calendar"></i> <strong>Date retour :</strong> {{ carte.date_retour|date:"d/m/Y" }}</span>
+            <span class="cc-maj"><i class="far fa-clock"></i> <strong>Date MAJ :</strong> {{ carte.date_maj|date:"d/m/Y H:i" }}</span>
+          </div>
+
+          <!-- Vue normale (carte complète) -->
+          <div class="carte-normal">
+            <div class="carte-header"><h4>{{ carte.titre }}</h4><button class="btn-copy" data-contenu="{{ carte.contenu|striptags|escape }}" title="Copier"><i class="far fa-copy"></i></button></div>
+            <div class="carte-body">
+              {% if carte.objet %}<p class="objet"><strong>Objet :</strong> {{ carte.objet }}</p>{% endif %}
+              {% if carte.nom_client %}<p class="client"><strong>Client :</strong> {{ carte.nom_client }}</p>{% endif %}
+              <div class="contenu">{{ carte.contenu|linebreaks }}</div>
+            </div>
+            {% if carte.image %}<div class="carte-image"><img src="{{ carte.image.url }}" alt="{{ carte.titre }}" loading="lazy"></div>{% endif %}
+            <div class="carte-footer"><span class="date-retour"><i class="far fa-calendar"></i> Retour : {{ carte.date_retour|date:"d/m/Y" }}</span><span class="date-maj">MAJ : {{ carte.date_maj|date:"d/m/Y H:i" }}</span></div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="empty-cartes">Aucune carte pour ce marché.</p>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+<!-- Script mis ici pour être sûr que le DOM des cartes existe -->
+<script src="{% static 'marches/js/description.js' %}"></script>
+{% endblock %}

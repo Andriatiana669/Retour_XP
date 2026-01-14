@@ -1,0 +1,184 @@
+/* ---------- VARIABLES ---------- */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+    --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
+    --transition: all .3s ease;
+    --hover-bg: rgba(13,110,253,.1);
+    --border-color: #dee2e6;
+}
+
+/* ---------- BASE ---------- */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--light-color);
+    color: #333;
+}
+
+/* ---------- FILTRES ---------- */
+.filters-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+.filters-bar label {
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--dark-color);
+    white-space: nowrap;
+}
+.filters-bar select {
+    min-width: 180px;
+    font-size: .85rem;
+    padding: .35rem .5rem;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    background: #fff;
+    transition: border-color .2s, box-shadow .2s;
+}
+.filters-bar select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 .15rem rgba(13,110,253,.25);
+    outline: none;
+}
+
+/* ---------- TABLE ---------- */
+.marches-table {
+    width: 100%;
+    background: #fff;
+    border-radius: .5rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.marches-table thead { display: table; width: 100%; table-layout: fixed; }
+.marches-table th {
+    background: var(--primary-color);
+    color: #fff;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+}
+.marches-table th i { color: rgba(255,255,255,.8); }
+.marches-table tbody { display: table; width: 100%; table-layout: fixed; }
+.marches-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+.marches-table tbody tr:hover { background: var(--hover-bg); }
+
+/* ---------- ACTIONS ---------- */
+.actions-cell {
+    display: flex;
+    gap: .4rem;
+    flex-wrap: wrap;
+}
+/* boutons identiques : même taille + icônes */
+.btn-voir {
+    flex: 1 1 0;
+    min-width: 70px;
+    padding: .3rem .5rem;
+    font-size: .8rem;
+    border-radius: .375rem;
+    text-decoration: none;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    transition: var(--transition);
+    text-align: center;
+}
+.btn-voir:hover { transform: translateY(-1px); }
+
+/* couleurs */
+.btn-voir.mod { background: var(--secondary-color); }
+.btn-voir.del { background: var(--danger-color); }
+.btn-voir.save { background: var(--success-color); }
+
+/* ---------- ÉTAT ---------- */
+.etat-cell { vertical-align: middle; }
+.etat-inline {
+    display: flex;
+    gap: .25rem;
+    align-items: center;
+}
+.etat-select {
+    max-width: 160px;
+    font-size: .85rem;
+    font-weight: 600;
+    border-radius: .25rem;
+    padding: .25rem .4rem;
+    border: 1px solid;
+    transition: var(--transition);
+}
+.save-etat-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: .9rem;
+    padding: .2rem .4rem;
+    border-radius: .25rem;
+    transition: background .2s;
+}
+.save-etat-btn:hover { background: var(--hover-bg); }
+
+/* ---------- BOUTONS CENTRÉS ---------- */
+.center-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+/* même look pour <a> et <button> */
+.center-buttons .btn-voir,
+.center-buttons button.btn-voir {
+    border: none;
+    min-width: auto;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: .375rem;
+    transition: var(--transition);
+    color: #fff;
+}
+.center-buttons .btn-voir:hover,
+.center-buttons button.btn-voir:hover {
+    transform: translateY(-1px);
+}
+
+/* bouton « Enregistrer » : même taille qu’« Ajouter » + pas de bordure */
+.center-buttons .btn-voir.save {
+    border: none;                       /* ← plus de bordure */
+    min-width: auto;                    /* ← même largeur que le voisin */
+    padding: .5rem 1rem;                /* ← même padding que « Ajouter » */
+    font-size: 1rem;                    /* ← même taille de texte */
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .marches-table { font-size: .875rem; }
+    .marches-table th, .marches-table td { padding: .75rem; }
+    .btn-voir { min-width: 60px; font-size: .75rem; }
+}

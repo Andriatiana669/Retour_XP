@@ -1,0 +1,401 @@
+/* ---------- VARIABLES ---------- */
+:root {
+  --primary: #0d6efd;
+  --glass: rgba(255, 255, 255, 0.55);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+  --txt: #212529;
+  --bg: #f5f7fb;
+}
+body {
+  background: var(--bg);
+  font-family: 'Poppins', sans-serif;
+  color: var(--txt);
+  margin: 0;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ---------- INFO ---------- */
+.info-grid {
+  margin-bottom: 2rem;
+}
+.info-card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.etat-item, .maj-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+.info-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.info-item {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+.info-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.info-item i {
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+.info-item strong {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-item span {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.bg-green {
+    background-color: #28a745 !important;
+    color: #fff !important;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.description-box {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+.description-box h3 {
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ---------- CARTES ---------- */
+.cartes-section {
+  margin-top: 2rem;
+}
+.cartes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.cartes-header h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-add {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+}
+.btn-add:hover {
+  background: #0b5ed7;
+}
+/* ------ BOUTONS DE BASCULE ------ */
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+.vue-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--txt);
+  transition: background 0.2s;
+}
+.vue-btn.active,
+.vue-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+/* ------ OUTILS : RECHERCHE + FILTRE + TRI ------ */
+.cartes-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.tools-left, .tools-right {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.form-search,
+.form-date,
+.form-sort {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  background: #fff;
+  font-size: 0.9rem;
+}
+.form-search {
+  min-width: 220px;
+}
+.form-date {
+  width: 160px;
+}
+.form-sort {
+  width: 180px;
+}
+/* ------ GRANDE CARTE : 4 par ligne + hauteur réduite ------ */
+.cartes-container {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+@media (min-width: 1200px) {
+  .cartes-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.carte {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.carte:hover {
+  transform: translateY(-4px);
+}
+/* Hauteur réduite : scroll + image limitée */
+.carte-normal .carte-body {
+  max-height: 150px;
+  overflow: auto;
+}
+.carte-normal .carte-image img {
+  max-height: 140px;
+  object-fit: cover;
+}
+/* Actions visibles dans les 2 modes */
+.mode-independent {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.4rem 0.75rem;
+  gap: 0.4rem;
+  background: rgba(0, 0, 0, 0.05);
+}
+.btn-act {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: background 0.2s;
+}
+.btn-act:hover {
+  background: rgba(13, 110, 253, 0.1);
+}
+.btn-act.del {
+  color: #dc3545;
+}
+.btn-act.del:hover {
+  background: rgba(220, 53, 69, 0.1);
+}
+.carte-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.carte-header h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+.btn-copy {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: background 0.2s;
+}
+.btn-copy:hover {
+  background: rgba(13, 110, 253, 0.1);
+}
+.carte-body {
+  padding: 0.6rem 1rem;
+  flex: 1;
+  overflow: auto;
+}
+.carte-body .objet,
+.carte-body .client {
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+}
+.carte-body .contenu {
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+.carte-image img {
+  width: 100%;
+  height: auto;
+  max-height: 140px;
+  object-fit: cover;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.carte-footer {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: #6c757d;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+}
+.date-maj {
+  font-size: 0.7rem;
+}
+.empty-cartes {
+  text-align: center;
+  padding: 3rem 0;
+  color: #6c757d;
+  grid-column: 1 / -1;
+}
+/* ------ MODE COMPACT (liste) ------ */
+.cartes-container.compact {
+  display: block;
+}
+.cartes-container.compact .carte-normal {
+  display: none;
+}
+.cartes-container.compact .carte-compact {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.cartes-container.compact .carte {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+}
+.cartes-container.compact .cc-date,
+.cartes-container.compact .cc-maj {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.cartes-container .carte-inner .carte-compact { display: none; }
+.cartes-container .carte-inner .carte-normal  { display: block; }
+
+.cartes-container.compact .carte-inner .carte-compact { display: grid; }
+.cartes-container.compact .carte-inner .carte-normal  { display: none; }
+
+/* bouton reset */
+.btn-reset {
+  background: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-reset:hover {
+  background: #5a6268;
+}
+
+/* éviter le saut de ligne sur petits écrans */
+.cartes-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.btn-export {
+    margin-left: 1rem;
+    background: #107c41;
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: .375rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+}
+.btn-export:hover { background: #0e6e3a; }
+
+
+
+@media (max-width: 768px) {
+  .info-items-container {
+    flex-direction: column;
+  }
+  .cartes-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cartes-tools {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cartes-container.compact .carte-compact {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,38 @@
+<!-- authentification/templates/authentification/login.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Retour XP</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'authentification/css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Connexion</h1>
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" id="loginForm">
+            {% csrf_token %}
+
+            <div id="matricule-group" class="form-group" style="display: none;">
+                <label for="matricule">Identifiant :</label> <!-- Champ "Matricule" à remplir pour les responsables -->
+                <input type="text" id="matricule" name="matricule">
+            </div>
+
+            <input type="hidden" id="userType" name="user_type" value="simple">
+
+            <div class="button-group">
+                <button type="submit" id="mainBtn" class="btn-simple">Se connecter</button>
+                <button type="button" id="switchBtn" class="btn-responsable">Responsable</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="{% static 'authentification/js/login.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'dashboard/base.html' %}   <!-- ou ton layout habituel -->
+{% load static %}
+{% block content %}
+<div class="form-box">
+  <h2>Modifier le marché « {{ marche.nom_marche }} »</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-voir"><i class="fas fa-save"></i> Enregistrer</button>
+    <a href="{% url 'dashboard:liste_marche' marche.marche_global_id %}"
+       class="btn-voir" style="background:var(--secondary-color)">Annuler</a>
+  </form>
+</div>
+{% endblock %}

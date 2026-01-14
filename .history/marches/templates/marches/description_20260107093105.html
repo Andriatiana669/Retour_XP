@@ -1,0 +1,82 @@
+<!-- marches/templates/marches/description.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ marche_detaille.titre }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'marches/css/description.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ marche_detaille.titre }}</h1>
+        <nav>
+            <a href="{% url 'dashboard:liste_marche' marche_detaille.marche_global.id %}">
+                ← Retour à la liste
+            </a>
+            <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+            <a href="{% url 'admin:logout' %}">Déconnexion</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="marche-info">
+            <h2>Informations du marché</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Matricule :</strong> {{ marche_detaille.matricule }}
+                </div>
+                <div class="info-item">
+                    <strong>Nom du marché :</strong> {{ marche_detaille.nom_marche }}
+                </div>
+                <div class="info-item">
+                    <strong>Responsable :</strong> {{ marche_detaille.resp_marche }}
+                </div>
+                <div class="info-item">
+                    <strong>État d'affaire :</strong>
+                    {% if marche_detaille.etat_affaire %}
+                    <span class="etat-badge" 
+                          style="color: {{ marche_detaille.etat_affaire.couleur }}; 
+                                 background-color: {{ marche_detaille.etat_affaire.couleur_fond }}">
+                        {{ marche_detaille.etat_affaire.nom }}
+                    </span>
+                    {% else %}
+                    <span class="etat-badge">Non défini</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if marche_detaille.description %}
+            <div class="description">
+                <h3>Description</h3>
+                <p>{{ marche_detaille.description }}</p>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="cartes-section">
+            <h2>Cartes</h2>
+            <div class="cartes-container">
+                {% for carte in cartes %}
+                <div class="carte">
+                    <h4>{{ carte.titre }}</h4>
+                    <div class="carte-contenu">
+                        {{ carte.contenu|linebreaks }}
+                    </div>
+                    {% if carte.image %}
+                    <div class="carte-image">
+                        <img src="{{ carte.image.url }}" alt="{{ carte.titre }}">
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p>Aucune carte disponible pour ce marché.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+    
+    <script src="{% static 'marches/js/description.js' %}"></script>
+</body>
+</html>

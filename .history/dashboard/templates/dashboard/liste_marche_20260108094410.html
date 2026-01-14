@@ -1,0 +1,98 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}Marchés – {{ marche_global.nom }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/liste_marche.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-table me-2" style="color: var(--primary-color);"></i>
+    <span style="color: var(--primary-color);">Liste des Marchés Détaillés</span></h2>
+
+<!-- Barre de filtres -->
+<div id="filtersBar" class="filters-bar"></div>
+
+<!-- Tableau -->
+<table class="marches-table">
+    <thead>
+        <tr>
+            <th data-type="date"><i class="fas fa-calendar-alt me-1"></i> Date de MAJ</th>
+            <th><i class="fas fa-tasks me-1"></i> État Marché</th>
+            <th><i class="fas fa-shopping-cart me-1"></i> Marché</th>
+            <th><i class="fas fa-user-tie me-1"></i> Resp Projet</th>
+            <th><i class="fas fa-cogs me-1"></i> Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for marche in marches_detailles %}
+        <tr data-id="{{ marche.id }}">
+            <td>{{ marche.date_maj|date:"d/m/Y H:i" }}</td>
+
+            <!-- État modifiable -->
+            <td class="etat-cell">
+                <form class="etat-inline">
+                    {% csrf_token %}
+                    <select name="etat" class="etat-select"
+                            data-initial="{{ marche.etat_affaire.id|default:'' }}"
+                            {% if not request.user.profile.est_responsable %}disabled{% endif %}
+                            style="color:{{ marche.etat_affaire.couleur|default:'#6c757d' }};
+                                background:{{ marche.etat_affaire.couleur_fond|default:'#f8f9fa' }};
+                                border-color:{{ marche.etat_affaire.couleur|default:'#ced4da' }};">
+                        <option value="">– Non défini –</option>
+                        {% for etat in etats %}
+                        <option value="{{ etat.id }}"
+                                {% if marche.etat_affaire.id == etat.id %}selected{% endif %}
+                                style="color:{{ etat.couleur }};background:{{ etat.couleur_fond }};">
+                            {{ etat.nom }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    {% if request.user.profile.est_responsable %}
+                    <button type="submit" class="save-etat-btn" data-id="{{ marche.id }}" title="Actualiser">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    {% endif %}
+                </form>
+            </td>
+
+            <td>{{ marche.nom_marche }}</td>
+            <td>{{ marche.resp_marche }}</td>
+
+            <!-- Actions -->
+            <td>
+                <div class="actions-cell">
+                    <a href="{% url 'marches:description' marche.id %}" class="btn-voir"><i class="fas fa-eye"></i> </a> <!-- Voir -->
+                    {% if request.user.profile.est_responsable %}
+                    <a href="{% url 'dashboard:modifier_marche' marche.id %}" class="btn-voir mod"><i class="fas fa-edit"></i> </a> <!-- Modifier -->
+                    <a href="{% url 'dashboard:supprimer_marche' marche.id %}" class="btn-voir del"
+                       onclick="return confirm('Supprimer ce marché ?');"><i class="fas fa-trash"></i> </a> <!-- Supprimer -->
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-center">Aucun marché détaillé trouvé.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if request.user.profile.est_responsable %}
+<!-- Boutons centrés -->
+<div class="center-buttons">
+    <a href="{% url 'dashboard:ajouter_marche' marche_global.id %}" class="btn-voir">
+        <i class="fas fa-plus-circle"></i> Ajouter un marché détaillé
+    </a>
+
+    <button id="saveAllEtats" class="btn-voir save">
+        <i class="fas fa-save"></i> Enregistrer
+    </button>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'dashboard/js/liste_marche.js' %}"></script>
+{% endblock %}

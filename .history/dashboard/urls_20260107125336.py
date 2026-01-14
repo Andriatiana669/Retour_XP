@@ -1,0 +1,14 @@
+# dashboard/urls.py
+from django.urls import path
+from . import views
+
+app_name = 'dashboard'
+
+urlpatterns = [
+    path('', views.dashboard_view, name='dashboard'),
+    path('marche/<int:marche_global_id>/', views.liste_marche_view, name='liste_marche'),
+    path('marche/<int:marche_global_id>/ajouter/', views.ajouter_marche_view, name='ajouter_marche'),
+    path('marche/change-etat/<int:pk>/', views.change_etat_view, name='change_etat'),
+    path('marche/modifier/<int:pk>/', views.modifier_marche_view, name='modifier_marche'),
+    path('marche/supprimer/<int:pk>/', views.supprimer_marche_view, name='supprimer_marche'),
+]

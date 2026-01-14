@@ -1,0 +1,95 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}Ajouter – {{ marche_global.nom }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/ajouter_marche.css' %}">
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--multiple {
+        min-height: 38px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h2><i class="fas fa-plus-circle"></i> Ajouter un marché dans « {{ marche_global.nom }} »</h2>
+
+    <form method="post" class="form-body">
+        {% csrf_token %}
+
+        <!-- Nom du marché -->
+        <div class="form-group">
+            {{ form.nom_marche.label_tag }}
+            {{ form.nom_marche }}
+            {% if form.nom_marche.errors %}
+                <small class="error-text">{{ form.nom_marche.errors|join:', ' }}</small>
+            {% endif %}
+        </div>
+
+        <!-- Responsable du marché -->
+        <div class="form-group">
+            {{ form.resp_marche.label_tag }}
+            {{ form.resp_marche }}
+            {% if form.resp_marche.errors %}
+                <small class="error-text">{{ form.resp_marche.errors|join:', ' }}</small>
+            {% endif %}
+        </div>
+
+        <!-- État d'affaire -->
+        <div class="form-group">
+            {{ form.etat_affaire.label_tag }}
+            {{ form.etat_affaire }}
+            {% if form.etat_affaire.errors %}
+                <small class="error-text">{{ form.etat_affaire.errors|join:', ' }}</small>
+            {% endif %}
+        </div>
+
+        <!-- Clients -->
+        <div class="form-group">
+            {{ form.nom_client.label_tag }}
+            {{ form.nom_client }}
+            {% if form.nom_client.errors %}
+                <small class="error-text">{{ form.nom_client.errors|join:', ' }}</small>
+            {% endif %}
+        </div>
+
+        <!-- Prestations -->
+        <div class="form-group">
+            {{ form.prestation.label_tag }}
+            {{ form.prestation }}
+            {% if form.prestation.errors %}
+                <small class="error-text">{{ form.prestation.errors|join:', ' }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-voir save">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+            <a href="{% url 'dashboard:liste_marche' marche_global.id %}" class="btn-voir secondary">
+                Annuler
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- jQuery requis par Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Active Select2 sur tous les champs à choix multiple et ForeignKey
+    $('select').select2({
+        width: '100%',
+        placeholder: 'Sélectionner',
+        allowClear: true
+    });
+});
+</script>
+{% endblock %}

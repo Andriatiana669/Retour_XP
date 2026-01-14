@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}Ajouter – {{ marche_global.nom }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/ajouter_marche.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <h2><i class="fas fa-plus-circle"></i> {% if form.instance.pk %}Modifier{% else %}Ajouter{% endif %} un marché dans « {{ marche_global.nom }} »</h2>
+
+    <form method="post" class="form-body">
+        {% csrf_token %}
+        {% for field in form %}
+            {% if field.name not in 'matricule titre description objet date_retour' %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <small class="error-text">{{ field.errors|join:', ' }}</small>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn-voir save">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+            <a href="{% url 'dashboard:liste_marche' marche_global.id %}" class="btn-voir secondary">
+                Annuler
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}{% endblock %}

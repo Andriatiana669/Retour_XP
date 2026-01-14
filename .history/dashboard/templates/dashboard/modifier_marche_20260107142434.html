@@ -1,0 +1,40 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}Modifier – {{ marche.nom_marche }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/modifier_marche.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-wrapper">
+    <div class="form-header">
+        <i class="fas fa-edit fa-lg"></i>
+        <h2>Modifier le marché « {{ marche.nom_marche }} »</h2>
+    </div>
+
+    <form method="post" class="form-body">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+                <div class="text-danger small">{{ field.errors|join:', ' }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <a href="{% url 'dashboard:liste_marche' marche.marche_global_id %}"
+               class="btn-cancel">
+                <i class="fas fa-times me-1"></i>Annuler
+            </a>
+            <button type="submit" class="btn-save">
+                <i class="fas fa-save me-1"></i>Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

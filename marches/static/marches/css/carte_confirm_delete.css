@@ -1,0 +1,124 @@
+/* ---------- VARIABLES ---------- */
+:root {
+  --primary: #0d6efd;
+  --danger: #dc3545;
+  --glass: rgba(255, 255, 255, 0.55);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --radius: 16px;
+  --txt: #212529;
+  --bg: #f5f7fb;
+  --grad: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);
+}
+
+/* ---------- HERO ---------- */
+.delete-header {
+  background: var(--grad);
+  color: #fff;
+  padding: 3rem 2rem 2rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.delete-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* ---------- MAIN ---------- */
+.delete-main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.delete-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem;
+  animation: fadeIn 0.8s ease;
+}
+
+.delete-card p {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.delete-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+.delete-card li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 1rem;
+}
+.delete-card li:last-child {
+  border-bottom: none;
+}
+.delete-card li strong {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.btn-cancel {
+  background: #6c757d;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50rem;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-cancel:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+.btn-del {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-del:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .delete-actions {
+    flex-direction: column;
+  }
+  .btn-cancel,
+  .btn-del {
+    width: 100%;
+    justify-content: center;
+  }
+}

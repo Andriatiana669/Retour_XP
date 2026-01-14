@@ -1,0 +1,80 @@
+:root {
+  --primary: #0d6efd;
+  --glass: rgba(255, 255, 255, 0.55);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --radius: 12px;
+  --txt: #212529;
+  --bg: #f5f7fb;
+}
+
+body { background: var(--bg); font-family: 'Poppins', sans-serif; color: var(--txt); margin: 0; }
+
+.form-hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #0b5ed7 100%);
+  color: #fff;
+  padding: 2rem 3rem 1.5rem;
+}
+.form-hero h1 { margin: 0; font-size: 1.75rem; font-weight: 600; }
+.breadcrumb { margin: .5rem 0 0; font-size: .9rem; opacity: .85; }
+.breadcrumb a { color: #fff; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.glass-form {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem 2.5rem;
+}
+
+.field-box { margin-bottom: 1.25rem; }
+.field-box label { display: block; font-weight: 600; margin-bottom: .4rem; }
+.field-box input,
+.field-box textarea,
+.field-box select {
+  width: 100%;
+  padding: .6rem .75rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .375rem;
+  background: #fff;
+  font-size: 1rem;
+}
+.field-box textarea { min-height: 120px; resize: vertical; }
+.field-box input[type="file"] { padding: .4rem; }
+.error { color: #dc3545; font-size: .8rem; margin-top: .25rem; display: block; }
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.btn-cancel {
+  background: #6c757d;
+  color: #fff;
+  padding: .5rem 1.2rem;
+  border-radius: .375rem;
+  text-decoration: none;
+  transition: background .2s;
+}
+.btn-cancel:hover { background: #5a6268; }
+.btn-save {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: .5rem 1.2rem;
+  border-radius: .375rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.btn-save:hover { background: #0b5ed7; }
+
+.clients-checkboxes{display:flex;flex-direction:column;gap:.5rem}
+.checkbox-item{display:flex;align-items:center;gap:.4rem}
+
+@media (max-width: 768px) {
+  .glass-form { padding: 1.5rem; }
+}

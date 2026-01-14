@@ -1,0 +1,69 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}{{ titre }} carte – {{ marche.nom_marche }}{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'marches/css/carte_form.css' %}">
+  <style>
+    .clients-checkboxes {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<section class="form-hero">
+  <h1><i class="fas fa-layer-group"></i> {{ titre }} une carte</h1>
+  <p class="breadcrumb">
+    <a href="{% url 'dashboard:dashboard' %}">Dashboard</a> /
+    <a href="{% url 'marches:description' marche.id %}">{{ marche.nom_marche }}</a> /
+    {{ titre }} carte
+  </p>
+</section>
+
+<form method="post" enctype="multipart/form-data" class="glass-form">
+  {% csrf_token %}
+
+  {# Champs classiques du modèle Carte (sans nom_client) #}
+  {% for field in form %}
+    <div class="field-box">
+      {{ field.label_tag }}
+      {{ field }}
+      {% if field.errors %}<small class="error">{{ field.errors|first }}</small>{% endif %}
+    </div>
+  {% endfor %}
+
+  {# Choix des clients liés au marché #}
+  <div class="field-box">
+    <label>Client(s) lié(s) au marché</label>
+    <div class="clients-checkboxes">
+      {% for client in clients_marche %}
+        <label class="checkbox-item">
+          <input type="checkbox" name="clients_choisis" value="{{ client.id }}"
+               {% if clients_marche|length == 1 %}checked{% endif %}>
+          {{ client.nom }}
+        </label>
+      {% empty %}
+        <p class="text-muted">Aucun client défini pour ce marché.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="actions">
+    <a href="{% url 'marches:description' marche.id %}" class="btn-cancel">Annuler</a>
+    <button type="submit" class="btn-save"><i class="fas fa-save"></i> Enregistrer</button>
+  </div>
+</form>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'marches/js/carte_form.js' %}"></script>
+{% endblock %}

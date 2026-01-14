@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un marché – {{ marche_global.nom }}</title>
+    <link rel="stylesheet" href="{% static 'dashboard/css/liste_marche.css' %}">
+    <style>
+        .form-box {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: .5rem;
+            box-shadow: var(--shadow-md)
+        }
+
+        .form-box h2 {
+            margin-top: 0
+        }
+
+        .form-box .form-group {
+            margin-bottom: 1rem
+        }
+
+        .form-box label {
+            font-weight: 600
+        }
+
+        .form-box input,
+        .form-box select,
+        .form-box textarea {
+            width: 100%;
+            padding: .5rem;
+            border: 1px solid var(--border-color);
+            border-radius: .25rem
+        }
+
+        .form-box button {
+            padding: .5rem 1.5rem;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: .25rem;
+            cursor: pointer
+        }
+
+        .form-box a.btn-secondary {
+            padding: .5rem 1rem;
+            background: var(--secondary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: .25rem;
+            margin-left: .5rem
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1><i class="fas fa-plus-circle"></i> Nouveau marché détaillé</h1>
+        <nav>
+            <a href="{% url 'dashboard:liste_marche' marche_global.id %}"><i class="fas fa-arrow-left"></i> Retour</a>
+            <a href="{% url 'authentification:logout' %}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </nav>
+    </header>
+    <main>
+        <div class="form-box">
+            <h2>Ajouter un marché dans « {{ marche_global.nom }} »</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.errors %}
+                        <small style="color:var(--danger-color)">{{ field.errors|join:', ' }}</small>
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+                <button type="submit"><i class="fas fa-save"></i> Enregistrer</button>
+                <a href="{% url 'dashboard:liste_marche' marche_global.id %}" class="btn-secondary">Annuler</a>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

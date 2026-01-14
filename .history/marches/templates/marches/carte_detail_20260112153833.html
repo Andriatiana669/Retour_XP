@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ carte.titre }} - Détails{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'marches/css/carte_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="carte-detail-header">
+  <h1><i class="fas fa-file-alt"></i> {{ carte.titre }}</h1>
+  <a href="{% url 'marches:description' carte.marche_detaille.id %}" class="btn-retour">
+    <i class="fas fa-arrow-left"></i> Retour au marché
+  </a>
+</section>
+
+<main class="carte-detail-main">
+  <div class="detail-card">
+    <div class="detail-row"><i class="fas fa-tag"></i><strong>Titre :</strong> {{ carte.titre }}</div>
+    <div class="detail-row"><i class="fas fa-paperclip"></i><strong>Objet :</strong> <span class="detail-objet">{{ carte.objet|default:"Non renseigné" }}</span></div>
+    <div class="detail-row"><i class="fas fa-user"></i><strong>Client :</strong> {{ carte.nom_client|default:"Non renseigné" }}</div>
+    <div class="detail-row"><i class="fas fa-calendar"></i><strong>Date de retour :</strong> {{ carte.date_retour|date:"d/m/Y" }}</div>
+    <div class="detail-row"><i class="fas fa-clock"></i><strong>Dernière MAJ :</strong> {{ carte.date_maj|date:"d/m/Y H:i" }}</div>
+
+    <div class="detail-content">
+      <h2><i class="fas fa-align-left"></i> Contenu</h2>
+      <div class="contenu">{{ carte.contenu|linebreaks }}</div>
+    </div>
+
+    {% if carte.image %}
+    <div class="detail-image">
+      <h2><i class="fas fa-image"></i> Image</h2>
+      <img src="{{ carte.image.url }}" alt="{{ carte.titre }}">
+
+      <!-- NOUVEAUX BOUTONS -->
+      <div class="detail-downloads">
+        <a href="{{ carte.image.url }}" download class="btn-down img">
+          <i class="fas fa-download"></i> Télécharger l’image
+        </a>
+        <a href="{% url 'marches:download_word' carte.id %}" class="btn-down word">
+          <i class="fas fa-file-word"></i> Télécharger Word
+        </a>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}
